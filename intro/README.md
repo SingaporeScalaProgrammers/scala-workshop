@@ -24,7 +24,7 @@ console` from the terminal and type in that arithmetic expression in to get
 the result.
 
 Of course, as software engineers we're not happy about scalability of that 
-solution. What if need to compute the sum of squares of even numbers up to 
+solution. What if we need to compute the sum of squares of even numbers up to 
 1000? Let's write a *real* program for that!
 
 The "Real" Program
@@ -183,6 +183,10 @@ argument `x` of type `Int` and returns a `List` of `Int`s;
 Despite explosion of code and duplication we've made our program 
 composable: every function can be tested in isolation and functions can be 
 combined in predictable ways as long as their type signatures are compatible.
+Each function became much more reusable too: `iterate` can generate lists of 
+integers of arbitrary length, `filterEven` can filter any list of integers 
+and so on. Later our program will be composed of even more granular and 
+universal building blocks.
 
 Consider the expression `sum(square(filterEven(iterate(10))))`. Unlike a 
 program made of statements, every sub-expression is an expression on its own:
@@ -197,3 +201,118 @@ property allowing substitution of values for expressions is called
 *referential transparency* meaning that referring to a value via an 
 indirection of a function call is transparent and doesn't change program 
 execution.
+
+Recursion
+---------
+
+Expression-based programming in pure functions makes program so much easier to 
+refactor because each expression only depends on its sub-expressions so 
+expressions can be rearranged freely. It relies on referential transparency 
+though and referential transparency doesn't stand mutable variables.
+
+To be clear, mutable variables are useful for performance optimization on 
+micro-level. That's the reason Scala supports them. We need however to learn 
+to program without mutable variables to fully embrace functional programming 
+style. So let's take a look at our `iterate` function and consider how to get
+rid of mutability there:
+
+```scala
+def iterate(max: Int): List[Int] = {
+  var result = List[Int]()
+
+  for (x <- 1 to max)
+    result = result :+ x    // <- mutation
+
+  result
+}
+```
+
+The reason we need a mutable variable in this case is to keep track of the 
+result of the previous iteration as we compute the current iteration. How can
+we keep track of the previous result without a variable? It turns out that in
+functional programming we use functions for everything. We will let a 
+function call itself with the result of the previous iteration and return the
+current iteration's result. This is called *recursion*:
+
+```scala
+def iterate(max: Int): List[Int] = {
+
+  @tailrec
+  def loop(result: List[Int], max: Int): List[Int] = max match {
+    case 0 => result
+    case _ => loop(max :: result, max - 1)    // <- recursion
+  }
+
+  loop(Nil, max)
+}
+```
+
+First, let's clear the new Scala syntax out of the way:
+
+1. Functions can be defined inside the body of other functions, this is not 
+recursion though;
+2. `@tailrec` annotation checks at compile time that our recursive function 
+`loop` will not blow the call stack with large inputs;
+3. We use *pattern matching* to match on integer `max`. It looks like `switch` 
+statement in other programming languages, but is an expression instead of a 
+statement because every `case` branch has to evaluate to the same type;
+4. `case _` matches any value;
+5. `element :: list` creates a new list with `element` prepended to `list`;
+6. `Nil` is an empty list.
+
+Recursive pattern is to pass the intermediary result along with the reduced 
+input to the `loop` function itself. The recursive function breaks out of 
+recursion when the input is fully reduced and the result is fully computed. 
+In this case `iterate` defines an internal recursive helper function which is
+then called with the original input and empty result.
+
+Similarly, we rewrite other functions using recursion:
+
+```scala
+def filterEven(xs: List[Int]): List[Int] = {
+
+  @tailrec
+  def loop(result: List[Int], xs: List[Int]): List[Int] = xs match {
+    case Nil => result
+    case x :: tail =>
+      val next = if (x % 2 == 0) List(x) else Nil
+      loop(next ++ result, tail)
+  }
+
+  loop(Nil, xs)
+}
+
+def square(xs: List[Int]): List[Int] = {
+
+  @tailrec
+  def loop(result: List[Int], xs: List[Int]): List[Int] = xs match {
+    case Nil => result
+    case x :: tail =>
+      val next = List(x * x)
+      loop(next ++ result, tail)
+  }
+
+  loop(Nil, xs)
+}
+
+def sum(xs: List[Int]): Int = {
+
+  @tailrec
+  def loop(result: Int, xs: List[Int]): Int = xs match {
+    case Nil => result
+    case x :: tail =>
+      val next = x
+      loop(next + result, tail)
+  }
+
+  loop(0, xs)
+}
+```
+
+Here we pattern match on a list instead of integer. Note how we used the same
+list construction syntax in the `case` expression to capture list's head `x` 
+and its `tail`. `++` concatenates two lists.
+
+Now we have a completely referentially transparent program composed of pure 
+functions! It is still far from perfect due to extensive code duplication 
+though. We'll deal with that next.
