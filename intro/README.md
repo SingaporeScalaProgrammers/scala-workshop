@@ -40,9 +40,9 @@ public class Loop {
     public static void main(String[] args) {
         int sum = 0;
 
-        for (int i = 1; i <= 10; i++) {
-            if (i % 2 == 0)
-                sum += i * i;
+        for (int x = 1; x <= 10; x++) {
+            if (x % 2 == 0)
+                sum += x * x;
         }
 
         System.out.println("Sum of even numbers from 1 to 10 is " + sum);
@@ -78,3 +78,120 @@ lines-long procedures and 100 methods-large classes that are hard to refactor
 
 Next we will translate our program to Scala and refactor it to functional 
 style guided by principles of immutable data and expression-based programming.
+
+Meet Scala
+----------
+
+Let's see how our program could look like written in Scala and learn some of 
+the Scala syntax:
+
+```scala
+object Main extends App {    // 1.
+
+  var sum = 0                // 2.
+  for (x <- 1 to 10) {       // 3. and 4.
+    if (x % 2 == 0)
+      sum += x * x
+  }
+
+  println(s"Sum of even numbers from 1 to 10 is $sum")    // 5.
+}
+```
+
+First you notice that Scala is less verbose: no semicolons needed, no `public
+ static void main`, no explicit reassignment of `x` in `for` loop. Here are 
+ other notable differences:
+
+1. `object` keyword defines a singleton value initialized by the block of code 
+inside it. Extending `App` makes it an entrypoint of an application;
+2. `var` keyword defines a variable that can be reassigned later. Type of the
+ variable is inferred from the right-hand side of the assignment, `Int` in 
+ this case;
+3. `1 to 10` defines a inclusive `Range` – a sequence that can be enumerated;
+4. `for (x <- seq) { ...x... }` enumerates elements of `seq` executing the 
+code block in curly braces with `x` representing each element in scope;
+5. `s"...$x..."` does string interpolation of value `x`.
+
+Decomplecting Functions
+-----------------------
+
+Now let's look at that program again and consider how many distinct functions
+ are interleaved together:
+
+```scala
+var sum = 0             // sum
+for (x <- 1 to 10) {    // iterate
+  if (x % 2 == 0)       // filter even
+    sum += x * x        // square and sum
+}
+```
+
+There are 4 distinct functions that are entangled in this statement-based 
+program. No single function can be tested in isolation. Let's pull them apart:
+
+```scala
+def iterate(max: Int): List[Int] = {
+  var result = List[Int]()
+
+  for (x <- 1 to max)
+    result = result :+ x
+
+  result
+}
+
+def filterEven(xs: List[Int]): List[Int] = {
+  var result = List[Int]()
+
+  for (x <- xs)
+    if (x % 2 == 0)
+      result = result :+ x
+
+  result
+}
+
+def square(xs: List[Int]): List[Int] = {
+  var result = List[Int]()
+
+  for (x <- xs)
+    result = result :+ (x * x)
+
+  result
+}
+
+def sum(xs: List[Int]): Int = {
+  var result = 0
+
+  for (x <- xs)
+    result += x
+
+  result
+}
+
+val result = sum(square(filterEven(iterate(10))))
+```
+
+Wow! The number of lines of code just exploded and we introduced a lot of 
+duplication along the way. Let's review new Scala syntax first:
+
+1. `def f(x: Int): List[Int] = {...}` defines function `f` that takes an 
+argument `x` of type `Int` and returns a `List` of `Int`s;
+2. The last expression of a function body is its return value;
+3. `val x = ...` defines an immutable value that cannot be changed.
+
+Despite explosion of code and duplication we've made our program 
+composable: every function can be tested in isolation and functions can be 
+combined in predictable ways as long as their type signatures are compatible.
+
+Consider the expression `sum(square(filterEven(iterate(10))))`. Unlike a 
+program made of statements, every sub-expression is an expression on its own:
+ `10` is an expression which evaluates to 10, `iterate(10)` is an expression 
+which evaluates to `List(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)`, `filterEven 
+(iterate(10))` is an expression which evaluates to `List(2, 4, 6, 8, 10)` 
+and so on. Every expression can be replaced with the value it evaluates to as 
+long as functions involved in the expression don't have side effects – e.g.
+launch the proverbial missiles or modify variables in other parts of the 
+program. In functional programming such functions are called *pure* and the 
+property allowing substitution of values for expressions is called 
+*referential transparency* meaning that referring to a value via an 
+indirection of a function call is transparent and doesn't change program 
+execution.
