@@ -176,7 +176,9 @@ duplication along the way. Let's review new Scala syntax first:
 1. `def f(x: Int): List[Int] = {...}` defines function `f` that takes an 
 argument `x` of type `Int` and returns a `List` of `Int`s;
 2. The last expression of a function body is its return value;
-3. `val x = ...` defines an immutable value that cannot be changed.
+3. `List[Int]()` creates an empty list of integers;
+4. `list :+ element` returns a new list made of appending `element` to `list`;
+5. `val x = ...` defines an immutable value that cannot be changed.
 
 Despite explosion of code and duplication we've made our program 
 composable: every function can be tested in isolation and functions can be 
