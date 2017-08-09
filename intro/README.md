@@ -424,3 +424,63 @@ be – less powerful functions are often more readable as they raise the level
 of abstraction. They can also be faster as they can be optimized for a 
 narrower use case. Write programs according to the principle of the least 
 powerful abstraction.
+
+More Combinators
+----------------
+
+Now `filterEven` and `square` can also be expressed in terms of more common 
+list combinators:
+
+```scala
+def filter[A](xs: List[A])(f: A => Boolean): List[A] =
+  flatMap(xs)(x => if (f(x)) List(x) else Nil)
+
+def map[A, B](xs: List[A])(f: A => B): List[B] =
+  flatMap(xs)(x => List(f(x)))
+
+def isEven(x: Int): Boolean = x % 2 == 0
+
+def square(x: Int): Int = x * x
+
+def sumOfEvenSquares(max: Int): Int = {
+  sum(map(filter(iterate(10))(isEven))(square))
+}
+```
+
+Here `square` really does only what it says and doesn't mess with lists 
+anymore, that's responsibility of `map` now.
+
+Collection API
+--------------
+
+By a lucky coincidence Scala standard library collection API already provides
+most of the functions that we've just discovered. It would be a shame not to 
+use them:
+
+```scala
+def isEven(x: Int): Boolean = x % 2 == 0
+
+def square(x: Int): Int = x * x
+
+def sumOfEvenSquares(max: Int): Int = {
+  (1 to 10)
+    .filter(isEven)
+    .map(square)
+    .sum
+}
+```
+
+We use `1 to 10` directly instead of our own `iterate` function. `filter`, 
+`map`, `sum` as well as `flatMap`, `foldLeft` and many more functions are 
+available as methods on any Scala collection. This allows using the fluid API 
+style avoiding nested function calls for improved readability.
+
+Summary
+-------
+
+The resulting program in functional style roughly the same size as the 
+imperative Java program we wrote in the beginning. It's arguably much more 
+readable and easy to maintain and change because it doesn't contain any 
+mutable variables and imperative statements. It's very modular – we can 
+change the order of operations in predictable ways and we can add more 
+transformations without changing the existing ones.
