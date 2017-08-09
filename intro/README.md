@@ -316,3 +316,54 @@ and its `tail`. `++` concatenates two lists.
 Now we have a completely referentially transparent program composed of pure 
 functions! It is still far from perfect due to extensive code duplication 
 though. We'll deal with that next.
+
+Higher-Order Functions
+----------------------
+
+Consider functions `filterEven` and `square`. They look almost identical: 
+declare a recursive helper function `loop` that enumerates the list and 
+builds up the output list one element at a time. The only difference is in 
+how `filterEven` and `square` define the next element of the output list from
+the element of the input list.
+
+In object-oriented programming code duplication like this could be resolved 
+using the [template method design pattern](https://en.wikipedia
+.org/wiki/Template_method_pattern) which involves subclassing and is quite 
+heavy-weight. In functional programming functions can be passed around as 
+arguments and be return values of other functions. Functions that take other 
+functions as arguments or return functions are called *higher-order* 
+functions. Let's see how we can refactor `filterEven` and `square` by 
+extracting a new higher-order function that we will call `flatMap`:
+
+```scala
+def flatMap(xs: List[Int], f: Int => List[Int]): List[Int] = {
+
+  @tailrec
+  def loop(xs: List[Int], result: List[Int]): List[Int] = xs match {
+    case Nil => result
+    case x :: tail =>
+      loop(tail, f(x) ++ result)
+  }
+
+  loop(xs, Nil)
+}
+
+def filterEven(xs: List[Int]): List[Int] =
+  flatMap(xs, x => if (x % 2 == 0) List(x) else Nil)
+
+def square(xs: List[Int]): List[Int] =
+  flatMap(xs, x => List(x * x))
+```
+
+1. `flatMap` takes function `f` as its second argument;
+2. `A => B` is type annotation for a function that takes an argument of type 
+`A` and returns a value of type `B`;
+3. `x => List(x * x)` is a lambda expression – a functional literal that 
+takes an argument `x` and returns a list with a value of `x` squared.
+
+`flatMap` is called this way because it maps each element of the input list 
+to a new value and, because the new value is a list, it flattens the 
+resulting list of lists to return a simple list. `flatMap` is more universal 
+than just `map` because it allows filtering to be expressed in terms of 
+itself. Imagine how would you implement `filterEven` in terms of `map` 
+instead of `flatMap`.
