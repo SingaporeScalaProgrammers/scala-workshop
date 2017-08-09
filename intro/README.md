@@ -367,3 +367,60 @@ resulting list of lists to return a simple list. `flatMap` is more universal
 than just `map` because it allows filtering to be expressed in terms of 
 itself. Imagine how would you implement `filterEven` in terms of `map` 
 instead of `flatMap`.
+
+Folding Lists
+-------------
+
+Now consider the `sum` function: It also does enumerate the input list and 
+build up the result based on the current element of the loop, however the 
+result type is different – it's `Int` instead of a list. What if we could 
+abstract away the type and let the passed in function argument decide the 
+type of the result? Let's try combining higher-order functions with generics 
+and define an even more fundamental function – `foldLeft`:
+
+```scala
+def foldLeft[A, R](xs: List[A])(zero: R)(combine: (R, A) => R): R = {
+
+  @tailrec
+  def loop(xs: List[A], result: R): R = xs match {
+    case Nil => result
+    case x :: tail =>
+      loop(tail, combine(result, x))
+  }
+
+  loop(xs, zero)
+}
+
+def flatMap(xs: List[Int], f: Int => List[Int]): List[Int] =
+  foldLeft(xs)(List[Int]())((acc, x) => f(x) ++ acc)
+
+def filterEven(xs: List[Int]): List[Int] =
+  flatMap(xs, x => if (x % 2 == 0) List(x) else Nil)
+
+def square(xs: List[Int]): List[Int] =
+  flatMap(xs, x => List(x * x))
+
+def sum(xs: List[Int]): Int =
+  foldLeft(xs)(0)((acc, x) => acc + x)
+```
+
+1. `foldLeft[A, R]` is parametrized on type of the input list `A` as well as 
+the type of its return value `R` thus `foldLeft` is a *generic* function;
+2. Scala functions can have multiple parameter lists. Here it's useful for 
+type inference: by knowing type of `xs` and `zero` Scala compiler doesn't 
+require explicit type annotations on `combine`.
+
+Function `foldLeft` takes a `zero` result (which is returned if the input list 
+is empty) and a `combine` function which will be applied to the intermediate 
+result (starting with `zero`) and to each element of the input list. In case 
+of `flatMap`, `zero` is an empty list and the combining function is list 
+concatenation. In case of `sum`, `zero` is integer 0 and combining function 
+is integer addition.
+
+We can implement `flatMap` in terms of `foldLeft` but not the other way 
+around, which means that `foldLeft` is a more powerful function. If something 
+can be implemented using more powerful functions, it doesn't mean it has to 
+be – less powerful functions are often more readable as they raise the level 
+of abstraction. They can also be faster as they can be optimized for a 
+narrower use case. Write programs according to the principle of the least 
+powerful abstraction.
