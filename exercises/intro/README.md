@@ -52,7 +52,7 @@ public class Loop {
 
 <center>
   <small>
-    _(source: [Loop1.java](https://github.com/SingaporeScalaProgrammers/scala-workshop/blob/master/intro/src/main/java/Loop1.java))_
+    _(source: [Loop1.java](https://github.com/SingaporeScalaProgrammers/scala-workshop/blob/master/references/intro/src/main/java/Loop1.java))_
   </small>
 </center>
 <br>
@@ -108,7 +108,7 @@ object Main extends App {    // 1.
 
 <center>
   <small>
-    _(source: [Loop2.scala](https://github.com/SingaporeScalaProgrammers/scala-workshop/blob/master/intro/src/main/scala/Loop2.scala))_
+    _(source: [Loop2.scala](https://github.com/SingaporeScalaProgrammers/scala-workshop/blob/master/references/intro/src/main/scala/Loop2.scala))_
   </small>
 </center>
 <br>
@@ -187,7 +187,7 @@ val result = sum(square(filterEven(iterate(10))))
 
 <center>
   <small>
-    _(source: [Loop3.scala](https://github.com/SingaporeScalaProgrammers/scala-workshop/blob/master/intro/src/main/scala/Loop3.scala))_
+    _(source: [Loop3.scala](https://github.com/SingaporeScalaProgrammers/scala-workshop/blob/master/references/intro/src/main/scala/Loop3.scala))_
   </small>
 </center>
 <br>
@@ -333,7 +333,7 @@ def sum(xs: List[Int]): Int = {
 
 <center>
   <small>
-    _(source: [Loop4.scala](https://github.com/SingaporeScalaProgrammers/scala-workshop/blob/master/intro/src/main/scala/Loop4.scala))_
+    _(source: [Loop4.scala](https://github.com/SingaporeScalaProgrammers/scala-workshop/blob/master/references/intro/src/main/scala/Loop4.scala))_
   </small>
 </center>
 <br>
@@ -386,7 +386,7 @@ def square(xs: List[Int]): List[Int] =
 
 <center>
   <small>
-    _(source: [Loop5.scala](https://github.com/SingaporeScalaProgrammers/scala-workshop/blob/master/intro/src/main/scala/Loop5.scala))_
+    _(source: [Loop5.scala](https://github.com/SingaporeScalaProgrammers/scala-workshop/blob/master/references/intro/src/main/scala/Loop5.scala))_
   </small>
 </center>
 <br>
@@ -442,7 +442,7 @@ def sum(xs: List[Int]): Int =
 
 <center>
   <small>
-    _(source: [Loop6.scala](https://github.com/SingaporeScalaProgrammers/scala-workshop/blob/master/intro/src/main/scala/Loop6.scala))_
+    _(source: [Loop6.scala](https://github.com/SingaporeScalaProgrammers/scala-workshop/blob/master/references/intro/src/main/scala/Loop6.scala))_
   </small>
 </center>
 <br>
@@ -492,7 +492,7 @@ def sumOfEvenSquares(max: Int): Int = {
 
 <center>
   <small>
-    _(source: [Loop7.scala](https://github.com/SingaporeScalaProgrammers/scala-workshop/blob/master/intro/src/main/scala/Loop7.scala))_
+    _(source: [Loop7.scala](https://github.com/SingaporeScalaProgrammers/scala-workshop/blob/master/references/intro/src/main/scala/Loop7.scala))_
   </small>
 </center>
 <br>
@@ -522,7 +522,7 @@ def sumOfEvenSquares(max: Int): Int = {
 
 <center>
   <small>
-    _(source: [Loop8.scala](https://github.com/SingaporeScalaProgrammers/scala-workshop/blob/master/intro/src/main/scala/Loop8.scala))_
+    _(source: [Loop8.scala](https://github.com/SingaporeScalaProgrammers/scala-workshop/blob/master/references/intro/src/main/scala/Loop8.scala))_
   </small>
 </center>
 <br>
