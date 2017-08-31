@@ -486,7 +486,7 @@ def isEven(x: Int): Boolean = x % 2 == 0
 def square(x: Int): Int = x * x
 
 def sumOfEvenSquares(max: Int): Int = {
-  sum(map(filter(iterate(10))(isEven))(square))
+  sum(map(filter(iterate(max))(isEven))(square))
 }
 ```
 
@@ -513,7 +513,7 @@ def isEven(x: Int): Boolean = x % 2 == 0
 def square(x: Int): Int = x * x
 
 def sumOfEvenSquares(max: Int): Int = {
-  (1 to 10)
+  (1 to max)
     .filter(isEven)
     .map(square)
     .sum
