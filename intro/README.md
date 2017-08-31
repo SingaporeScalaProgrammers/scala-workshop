@@ -8,7 +8,7 @@ expression-based programming, recursion, immutability and higher-order
 functions.
 
 Getting Started
--------
+---------------
 
 Open file `src/main/scala/Main.scala` in your editor of choice. To run the 
 program start `sbt` from the terminal and type `run` in SBT prompt.
@@ -49,6 +49,14 @@ public class Loop {
     }
 }
 ```
+
+<center>
+  <small>
+    _(source: [Loop1.java](https://github.com/SingaporeScalaProgrammers/scala-workshop/blob/master/intro/src/main/java/Loop1.java))_
+  </small>
+</center>
+<br>
+
 
 This program is on purpose easy enough to understand. Consider however that 
 in your real programming work you would iterate over some complex domain 
@@ -97,6 +105,13 @@ object Main extends App {    // 1.
   println(s"Sum of even numbers from 1 to 10 is $sum")    // 5.
 }
 ```
+
+<center>
+  <small>
+    _(source: [Loop2.scala](https://github.com/SingaporeScalaProgrammers/scala-workshop/blob/master/intro/src/main/scala/Loop2.scala))_
+  </small>
+</center>
+<br>
 
 First you notice that Scala is less verbose: no semicolons needed, no `public
  static void main`, no explicit reassignment of `x` in `for` loop. Here are 
@@ -169,6 +184,13 @@ def sum(xs: List[Int]): Int = {
 
 val result = sum(square(filterEven(iterate(10))))
 ```
+
+<center>
+  <small>
+    _(source: [Loop3.scala](https://github.com/SingaporeScalaProgrammers/scala-workshop/blob/master/intro/src/main/scala/Loop3.scala))_
+  </small>
+</center>
+<br>
 
 Wow! The number of lines of code just exploded and we introduced a lot of 
 duplication along the way. Let's review new Scala syntax first:
@@ -309,6 +331,13 @@ def sum(xs: List[Int]): Int = {
 }
 ```
 
+<center>
+  <small>
+    _(source: [Loop4.scala](https://github.com/SingaporeScalaProgrammers/scala-workshop/blob/master/intro/src/main/scala/Loop4.scala))_
+  </small>
+</center>
+<br>
+
 Here we pattern match on a list instead of integer. Note how we used the same
 list construction syntax in the `case` expression to capture list's head `x` 
 and its `tail`. `++` concatenates two lists.
@@ -354,6 +383,13 @@ def filterEven(xs: List[Int]): List[Int] =
 def square(xs: List[Int]): List[Int] =
   flatMap(xs, x => List(x * x))
 ```
+
+<center>
+  <small>
+    _(source: [Loop5.scala](https://github.com/SingaporeScalaProgrammers/scala-workshop/blob/master/intro/src/main/scala/Loop5.scala))_
+  </small>
+</center>
+<br>
 
 1. `flatMap` takes function `f` as its second argument;
 2. `A => B` is type annotation for a function that takes an argument of type 
@@ -404,6 +440,13 @@ def sum(xs: List[Int]): Int =
   foldLeft(xs)(0)((acc, x) => acc + x)
 ```
 
+<center>
+  <small>
+    _(source: [Loop6.scala](https://github.com/SingaporeScalaProgrammers/scala-workshop/blob/master/intro/src/main/scala/Loop6.scala))_
+  </small>
+</center>
+<br>
+
 1. `foldLeft[A, R]` is parametrized on type of the input list `A` as well as 
 the type of its return value `R` thus `foldLeft` is a *generic* function;
 2. Scala functions can have multiple parameter lists. Here it's useful for 
@@ -447,6 +490,13 @@ def sumOfEvenSquares(max: Int): Int = {
 }
 ```
 
+<center>
+  <small>
+    _(source: [Loop7.scala](https://github.com/SingaporeScalaProgrammers/scala-workshop/blob/master/intro/src/main/scala/Loop7.scala))_
+  </small>
+</center>
+<br>
+
 Here `square` really does only what it says and doesn't mess with lists 
 anymore, that's responsibility of `map` now.
 
@@ -469,6 +519,13 @@ def sumOfEvenSquares(max: Int): Int = {
     .sum
 }
 ```
+
+<center>
+  <small>
+    _(source: [Loop8.scala](https://github.com/SingaporeScalaProgrammers/scala-workshop/blob/master/intro/src/main/scala/Loop8.scala))_
+  </small>
+</center>
+<br>
 
 We use `1 to 10` directly instead of our own `iterate` function. `filter`, 
 `map`, `sum` as well as `flatMap`, `foldLeft` and many more functions are 
