@@ -1,0 +1,215 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <meta content="text/html; charset=ISO-8859-1" http-equiv="content-type">
+  <title>File Compare</title>
+  <style type="text/css">
+  #page {
+    font-family: sans-serif;
+  }
+  table {
+    border-collapse: collapse;
+  }
+  td {
+    white-space: nowrap;
+    font-family: monospace;
+    font-size: x-small;
+    vertical-align: top;
+  }
+  td.fileName {
+    background: #E6E6E6;
+    font-family: sans-serif;
+    font-size: small;
+  }
+  td.lineNumber {
+    text-align: right;
+    background: #FFC800;
+  }
+  td.added {
+    background: #BEF0BE;
+  }
+  td.removed {
+    background: #C8C8FF;
+  }
+  td.changed {
+    background: #FFC8C8;
+  }
+  td.equal {
+    background: #FFFFFF;
+  }
+  td.empty {
+    background: #F2F2F2;
+  }
+  </style>
+  <link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body>
+  <table>
+    <tr>
+      <td colspan="2" class="filename">/Users/hhandoko/Workspace/Repositories/scala-workshop/references/intro/src/main/scala/Loop7.scala</td>
+      <td colspan="2" class="filename">/Users/hhandoko/Workspace/Repositories/scala-workshop/references/intro/src/main/scala/Loop8.scala</td>
+    </tr>
+      <tr>
+<td class="lineNumber">1</td><td class="removed">import&nbsp;scala.annotation.tailrec</td><td class="lineNumber"></td><td class="empty"></td>
+      </tr>
+      <tr>
+<td class="lineNumber">2</td><td class="removed"></td><td class="lineNumber"></td><td class="empty"></td>
+      </tr>
+      <tr>
+<td class="lineNumber">3</td><td class="changed">object&nbsp;Loop7&nbsp;extends&nbsp;App&nbsp;{</td><td class="lineNumber">1</td><td class="changed">object&nbsp;Loop8&nbsp;extends&nbsp;App&nbsp;{</td>
+      </tr>
+      <tr>
+<td class="lineNumber">4</td><td class="removed"></td><td class="lineNumber"></td><td class="empty"></td>
+      </tr>
+      <tr>
+<td class="lineNumber">5</td><td class="removed">&nbsp;&nbsp;def&nbsp;iterate(max:&nbsp;Int):&nbsp;List[Int]&nbsp;=&nbsp;{</td><td class="lineNumber"></td><td class="empty"></td>
+      </tr>
+      <tr>
+<td class="lineNumber">6</td><td class="removed">&nbsp;&nbsp;&nbsp;&nbsp;var&nbsp;result&nbsp;=&nbsp;List[Int]()</td><td class="lineNumber"></td><td class="empty"></td>
+      </tr>
+      <tr>
+<td class="lineNumber">7</td><td class="removed"></td><td class="lineNumber"></td><td class="empty"></td>
+      </tr>
+      <tr>
+<td class="lineNumber">8</td><td class="removed">&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;(x&nbsp;&lt;-&nbsp;1&nbsp;to&nbsp;max)</td><td class="lineNumber"></td><td class="empty"></td>
+      </tr>
+      <tr>
+<td class="lineNumber">9</td><td class="removed">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;result&nbsp;=&nbsp;result&nbsp;:+&nbsp;x</td><td class="lineNumber"></td><td class="empty"></td>
+      </tr>
+      <tr>
+<td class="lineNumber">10</td><td class="removed"></td><td class="lineNumber"></td><td class="empty"></td>
+      </tr>
+      <tr>
+<td class="lineNumber">11</td><td class="removed">&nbsp;&nbsp;&nbsp;&nbsp;result</td><td class="lineNumber"></td><td class="empty"></td>
+      </tr>
+      <tr>
+<td class="lineNumber">12</td><td class="removed">&nbsp;&nbsp;}</td><td class="lineNumber"></td><td class="empty"></td>
+      </tr>
+      <tr>
+<td class="lineNumber">13</td><td class="removed"></td><td class="lineNumber"></td><td class="empty"></td>
+      </tr>
+      <tr>
+<td class="lineNumber">14</td><td class="removed">&nbsp;&nbsp;def&nbsp;foldLeft[A,&nbsp;R](xs:&nbsp;List[A])(zero:&nbsp;R)(combine:&nbsp;(R,&nbsp;A)&nbsp;=&gt;&nbsp;R):&nbsp;R&nbsp;=&nbsp;{</td><td class="lineNumber"></td><td class="empty"></td>
+      </tr>
+      <tr>
+<td class="lineNumber">15</td><td class="removed"></td><td class="lineNumber"></td><td class="empty"></td>
+      </tr>
+      <tr>
+<td class="lineNumber">16</td><td class="removed">&nbsp;&nbsp;&nbsp;&nbsp;@tailrec</td><td class="lineNumber"></td><td class="empty"></td>
+      </tr>
+      <tr>
+<td class="lineNumber">17</td><td class="removed">&nbsp;&nbsp;&nbsp;&nbsp;def&nbsp;loop(xs:&nbsp;List[A],&nbsp;result:&nbsp;R):&nbsp;R&nbsp;=&nbsp;xs&nbsp;match&nbsp;{</td><td class="lineNumber"></td><td class="empty"></td>
+      </tr>
+      <tr>
+<td class="lineNumber">18</td><td class="removed">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case&nbsp;Nil&nbsp;=&gt;&nbsp;result</td><td class="lineNumber"></td><td class="empty"></td>
+      </tr>
+      <tr>
+<td class="lineNumber">19</td><td class="removed">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case&nbsp;x&nbsp;::&nbsp;tail&nbsp;=&gt;</td><td class="lineNumber"></td><td class="empty"></td>
+      </tr>
+      <tr>
+<td class="lineNumber">20</td><td class="removed">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;loop(tail,&nbsp;combine(result,&nbsp;x))</td><td class="lineNumber"></td><td class="empty"></td>
+      </tr>
+      <tr>
+<td class="lineNumber">21</td><td class="removed">&nbsp;&nbsp;&nbsp;&nbsp;}</td><td class="lineNumber"></td><td class="empty"></td>
+      </tr>
+      <tr>
+<td class="lineNumber">22</td><td class="removed"></td><td class="lineNumber"></td><td class="empty"></td>
+      </tr>
+      <tr>
+<td class="lineNumber">23</td><td class="removed">&nbsp;&nbsp;&nbsp;&nbsp;loop(xs,&nbsp;zero)</td><td class="lineNumber"></td><td class="empty"></td>
+      </tr>
+      <tr>
+<td class="lineNumber">24</td><td class="removed">&nbsp;&nbsp;}</td><td class="lineNumber"></td><td class="empty"></td>
+      </tr>
+      <tr>
+<td class="lineNumber">25</td><td class="removed"></td><td class="lineNumber"></td><td class="empty"></td>
+      </tr>
+      <tr>
+<td class="lineNumber">26</td><td class="removed">&nbsp;&nbsp;def&nbsp;flatMap[A,&nbsp;B](xs:&nbsp;List[A])(f:&nbsp;A&nbsp;=&gt;&nbsp;List[B]):&nbsp;List[B]&nbsp;=</td><td class="lineNumber"></td><td class="empty"></td>
+      </tr>
+      <tr>
+<td class="lineNumber">27</td><td class="removed">&nbsp;&nbsp;&nbsp;&nbsp;foldLeft(xs)(List[B]())((acc,&nbsp;x)&nbsp;=&gt;&nbsp;f(x)&nbsp;++&nbsp;acc)</td><td class="lineNumber"></td><td class="empty"></td>
+      </tr>
+      <tr>
+<td class="lineNumber">28</td><td class="removed"></td><td class="lineNumber"></td><td class="empty"></td>
+      </tr>
+      <tr>
+<td class="lineNumber">29</td><td class="removed">&nbsp;&nbsp;def&nbsp;filter[A](xs:&nbsp;List[A])(f:&nbsp;A&nbsp;=&gt;&nbsp;Boolean):&nbsp;List[A]&nbsp;=</td><td class="lineNumber"></td><td class="empty"></td>
+      </tr>
+      <tr>
+<td class="lineNumber">30</td><td class="removed">&nbsp;&nbsp;&nbsp;&nbsp;flatMap(xs)(x&nbsp;=&gt;&nbsp;if&nbsp;(f(x))&nbsp;List(x)&nbsp;else&nbsp;Nil)</td><td class="lineNumber"></td><td class="empty"></td>
+      </tr>
+      <tr>
+<td class="lineNumber">31</td><td class="removed"></td><td class="lineNumber"></td><td class="empty"></td>
+      </tr>
+      <tr>
+<td class="lineNumber">32</td><td class="removed">&nbsp;&nbsp;def&nbsp;map[A,&nbsp;B](xs:&nbsp;List[A])(f:&nbsp;A&nbsp;=&gt;&nbsp;B):&nbsp;List[B]&nbsp;=</td><td class="lineNumber"></td><td class="empty"></td>
+      </tr>
+      <tr>
+<td class="lineNumber">33</td><td class="removed">&nbsp;&nbsp;&nbsp;&nbsp;flatMap(xs)(x&nbsp;=&gt;&nbsp;List(f(x)))</td><td class="lineNumber"></td><td class="empty"></td>
+      </tr>
+      <tr>
+<td class="lineNumber">34</td><td class="equal"></td><td class="lineNumber">2</td><td class="equal"></td>
+      </tr>
+      <tr>
+<td class="lineNumber">35</td><td class="equal">&nbsp;&nbsp;def&nbsp;isEven(x:&nbsp;Int):&nbsp;Boolean&nbsp;=&nbsp;x&nbsp;%&nbsp;2&nbsp;==&nbsp;0</td><td class="lineNumber">3</td><td class="equal">&nbsp;&nbsp;def&nbsp;isEven(x:&nbsp;Int):&nbsp;Boolean&nbsp;=&nbsp;x&nbsp;%&nbsp;2&nbsp;==&nbsp;0</td>
+      </tr>
+      <tr>
+<td class="lineNumber">36</td><td class="equal"></td><td class="lineNumber">4</td><td class="equal"></td>
+      </tr>
+      <tr>
+<td class="lineNumber">37</td><td class="equal">&nbsp;&nbsp;def&nbsp;square(x:&nbsp;Int):&nbsp;Int&nbsp;=&nbsp;x&nbsp;*&nbsp;x</td><td class="lineNumber">5</td><td class="equal">&nbsp;&nbsp;def&nbsp;square(x:&nbsp;Int):&nbsp;Int&nbsp;=&nbsp;x&nbsp;*&nbsp;x</td>
+      </tr>
+      <tr>
+<td class="lineNumber">38</td><td class="equal"></td><td class="lineNumber">6</td><td class="equal"></td>
+      </tr>
+      <tr>
+<td class="lineNumber">39</td><td class="removed">&nbsp;&nbsp;def&nbsp;sum(xs:&nbsp;List[Int]):&nbsp;Int&nbsp;=</td><td class="lineNumber"></td><td class="empty"></td>
+      </tr>
+      <tr>
+<td class="lineNumber">40</td><td class="removed">&nbsp;&nbsp;&nbsp;&nbsp;foldLeft(xs)(0)((acc,&nbsp;x)&nbsp;=&gt;&nbsp;acc&nbsp;+&nbsp;x)</td><td class="lineNumber"></td><td class="empty"></td>
+      </tr>
+      <tr>
+<td class="lineNumber">41</td><td class="removed"></td><td class="lineNumber"></td><td class="empty"></td>
+      </tr>
+      <tr>
+<td class="lineNumber">42</td><td class="equal">&nbsp;&nbsp;def&nbsp;sumOfEvenSquares(max:&nbsp;Int):&nbsp;Int&nbsp;=&nbsp;{</td><td class="lineNumber">7</td><td class="equal">&nbsp;&nbsp;def&nbsp;sumOfEvenSquares(max:&nbsp;Int):&nbsp;Int&nbsp;=&nbsp;{</td>
+      </tr>
+      <tr>
+<td class="lineNumber">43</td><td class="changed">&nbsp;&nbsp;&nbsp;&nbsp;sum(map(filter(iterate(max))(isEven))(square))</td><td class="lineNumber">8</td><td class="changed">&nbsp;&nbsp;&nbsp;&nbsp;(1&nbsp;to&nbsp;max)</td>
+      </tr>
+      <tr>
+<td class="lineNumber"></td><td class="changed"></td><td class="lineNumber">9</td><td class="changed">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.filter(isEven)</td>
+      </tr>
+      <tr>
+<td class="lineNumber"></td><td class="changed"></td><td class="lineNumber">10</td><td class="changed">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.map(square)</td>
+      </tr>
+      <tr>
+<td class="lineNumber"></td><td class="changed"></td><td class="lineNumber">11</td><td class="changed">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.sum</td>
+      </tr>
+      <tr>
+<td class="lineNumber">44</td><td class="equal">&nbsp;&nbsp;}</td><td class="lineNumber">12</td><td class="equal">&nbsp;&nbsp;}</td>
+      </tr>
+      <tr>
+<td class="lineNumber">45</td><td class="equal"></td><td class="lineNumber">13</td><td class="equal"></td>
+      </tr>
+      <tr>
+<td class="lineNumber">46</td><td class="equal">&nbsp;&nbsp;val&nbsp;result&nbsp;=&nbsp;sumOfEvenSquares(10)</td><td class="lineNumber">14</td><td class="equal">&nbsp;&nbsp;val&nbsp;result&nbsp;=&nbsp;sumOfEvenSquares(10)</td>
+      </tr>
+      <tr>
+<td class="lineNumber">47</td><td class="equal"></td><td class="lineNumber">15</td><td class="equal"></td>
+      </tr>
+      <tr>
+<td class="lineNumber">48</td><td class="equal">&nbsp;&nbsp;println(s&quot;Sum&nbsp;of&nbsp;even&nbsp;numbers&nbsp;from&nbsp;1&nbsp;to&nbsp;10&nbsp;is&nbsp;$result&quot;)</td><td class="lineNumber">16</td><td class="equal">&nbsp;&nbsp;println(s&quot;Sum&nbsp;of&nbsp;even&nbsp;numbers&nbsp;from&nbsp;1&nbsp;to&nbsp;10&nbsp;is&nbsp;$result&quot;)</td>
+      </tr>
+      <tr>
+<td class="lineNumber">49</td><td class="equal"></td><td class="lineNumber">17</td><td class="equal"></td>
+      </tr>
+      <tr>
+<td class="lineNumber">50</td><td class="equal">}</td><td class="lineNumber">18</td><td class="equal">}</td>
+      </tr>
+      <tr>
+<td class="lineNumber">51</td><td class="equal"></td><td class="lineNumber">19</td><td class="equal"></td>
+      </tr>
+  </table>
+</body>
