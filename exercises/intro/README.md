@@ -5,11 +5,11 @@ In this tutorial we will start with a trivial program, written in imperative
 style, and through a series of refactorings transform it into a functional 
 program while learning core FP concepts such as:
 
-* referential transparency,
-* expression-based programming,
-* recursion,
-* immutability, and
-* higher-order functions.
+- referential transparency,
+- expression-based programming,
+- recursion,
+- immutability, and
+- higher-order functions.
 
 Getting Started
 ---------------
@@ -65,12 +65,12 @@ This program is, on purpose, easy enough to understand. Consider however, that
 in your real programming work you might deal with several complexities at the same
 time and thus a simple `for` loop with a variable can quickly get out of hand:
 
-* iterating over some complex domain objects instead on numbers,
-* iterating over two or three arrays of those domain objects simultaneously,
-* multiple and / or nested conditions,
-* multiple variables to keep track of running totals,
-* multiple variables that all change independently based on complex conditional logic, and
-* parallel loop execution (i.e. utilising multiple CPU cores).
+- iterating over some complex domain objects instead on numbers,
+- iterating over two or three arrays of those domain objects simultaneously,
+- multiple and / or nested conditions,
+- multiple variables to keep track of running totals,
+- multiple variables that all change independently based on complex conditional logic, and
+- parallel loop execution (i.e. utilising multiple CPU cores).
 
 Two cornerstones of imperative programming languages contribute to the 
 problem here:
@@ -236,10 +236,10 @@ universal building blocks.
 Consider the expression `sum(square(filterEven(iterate(10))))`. Unlike a 
 program made of statements, every sub-expression is an expression on its own:
 
-* `10` is an expression which evaluates to 10,
-* `iterate(10)` is an expression which evaluates to `List(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)`,
-* `filterEven (iterate(10))` is an expression which evaluates to `List(2, 4, 6, 8, 10)`,
-* and so on.
+- `10` is an expression which evaluates to 10,
+- `iterate(10)` is an expression which evaluates to `List(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)`,
+- `filterEven (iterate(10))` is an expression which evaluates to `List(2, 4, 6, 8, 10)`,
+- and so on.
 
 Every expression can be replaced with the value it evaluates to as 
 long as functions involved in the expression don't have side effects – e.g.
