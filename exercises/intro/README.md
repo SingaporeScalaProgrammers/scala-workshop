@@ -534,7 +534,7 @@ change the order of operations in predictable ways and we can add more
 transformations without changing the existing ones.
 
 <!-- Links and notes -->
-[Loop1.scala]: https://github.com/SingaporeScalaProgrammers/scala-workshop/blob/master/references/intro/src/main/scala/Loop1.scala
+[Loop1.java]: https://github.com/SingaporeScalaProgrammers/scala-workshop/blob/master/references/intro/src/main/java/Loop1.java
 [Loop2.scala]: https://github.com/SingaporeScalaProgrammers/scala-workshop/blob/master/references/intro/src/main/scala/Loop2.scala
 [Loop3.scala]: https://github.com/SingaporeScalaProgrammers/scala-workshop/blob/master/references/intro/src/main/scala/Loop3.scala
 [Loop3.scala => Loop4.scala]: https://rawgit.com/SingaporeScalaProgrammers/scala-workshop/master/references/intro/diff/Loop3-Loop4.html
