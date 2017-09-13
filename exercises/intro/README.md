@@ -54,8 +54,7 @@ public class Loop {
 }
 ```
 
-_<center><small>(source: [Loop1.java](https://github.com/SingaporeScalaProgrammers/scala-workshop/blob/master/references/intro/src/main/java/Loop1.java))</small></center>_
-<br>
+Source: [Loop1.java]
 
 This program is, on purpose, easy enough to understand. Consider however, that 
 in your real programming work you might deal with several complexities at the same
@@ -106,8 +105,7 @@ object Main extends App {    // 1.
 }
 ```
 
-_<center><small>(source: [Loop2.scala](https://github.com/SingaporeScalaProgrammers/scala-workshop/blob/master/references/intro/src/main/scala/Loop2.scala))</small></center>_
-<br>
+Source: [Loop2.scala]
 
 First you notice that Scala is less verbose: no semicolons needed, no `public
  static void main`, no explicit reassignment of `x` in `for` loop. Here are 
@@ -202,8 +200,7 @@ def sum(xs: List[Int]): Int = {
 val result = sum(square(filterEven(iterate(10))))
 ```
 
-_<center><small>(source: [Loop3.scala](https://github.com/SingaporeScalaProgrammers/scala-workshop/blob/master/references/intro/src/main/scala/Loop3.scala))</small></center>_
-<br>
+Source: [Loop3.scala]
 
 Wow! The number of lines of code just exploded and we introduced a lot of 
 duplication along the way. Let's review the function body implementation:
@@ -345,8 +342,7 @@ def sum(xs: List[Int]): Int = {
 }
 ```
 
-_<center><small>(source: [Loop4.scala](https://github.com/SingaporeScalaProgrammers/scala-workshop/blob/master/references/intro/src/main/scala/Loop4.scala))</small></center>_
-<br>
+Source: [Loop4.scala]
 
 Here we pattern match on a list instead of integer. Note how we used the same
 list construction syntax in the `case` expression to capture list's head `x` 
@@ -394,8 +390,7 @@ def square(xs: List[Int]): List[Int] =
   flatMap(xs, x => List(x * x))
 ```
 
-_<center><small>(source: [Loop5.scala](https://github.com/SingaporeScalaProgrammers/scala-workshop/blob/master/references/intro/src/main/scala/Loop5.scala))_</small></center>
-<br>
+Source: [Loop5.scala]
 
 1. `flatMap` takes function `f` as its second argument;
 2. `A => B` is type annotation for a function that takes an argument of type 
@@ -446,8 +441,7 @@ def sum(xs: List[Int]): Int =
   foldLeft(xs)(0)((acc, x) => acc + x)
 ```
 
-_<center><small>(source: [Loop6.scala](https://github.com/SingaporeScalaProgrammers/scala-workshop/blob/master/references/intro/src/main/scala/Loop6.scala))</small></center>_
-<br>
+Source: [Loop6.scala]
 
 1. `foldLeft[A, R]` is parametrized on type of the input list `A` as well as 
 the type of its return value `R` thus `foldLeft` is a *generic* function;
@@ -492,8 +486,7 @@ def sumOfEvenSquares(max: Int): Int = {
 }
 ```
 
-_<center><small>(source: [Loop7.scala](https://github.com/SingaporeScalaProgrammers/scala-workshop/blob/master/references/intro/src/main/scala/Loop7.scala))</small></center>_
-<br>
+Source: [Loop7.scala]
 
 Here, `square` really does only what it says and doesn't mess with lists 
 anymore, which is now the responsibility of `map`.
@@ -520,8 +513,7 @@ def sumOfEvenSquares(max: Int): Int = {
 }
 ```
 
-_<center><small>(source: [Loop8.scala](https://github.com/SingaporeScalaProgrammers/scala-workshop/blob/master/references/intro/src/main/scala/Loop8.scala))</small></center>_
-<br>
+Source: [Loop8.scala]
 
 We use `1 to 10` directly instead of our own `iterate` function. `filter`, 
 `map`, `sum` as well as `flatMap`, `foldLeft` and many more functions are 
@@ -537,3 +529,13 @@ readable and easy to maintain and change because it doesn't contain any
 mutable variables and imperative statements. It's very modular – we can 
 change the order of operations in predictable ways and we can add more 
 transformations without changing the existing ones.
+
+<!-- Links and notes -->
+[Loop1.scala]: https://github.com/SingaporeScalaProgrammers/scala-workshop/blob/master/references/intro/src/main/scala/Loop1.scala
+[Loop2.scala]: https://github.com/SingaporeScalaProgrammers/scala-workshop/blob/master/references/intro/src/main/scala/Loop2.scala
+[Loop3.scala]: https://github.com/SingaporeScalaProgrammers/scala-workshop/blob/master/references/intro/src/main/scala/Loop3.scala
+[Loop4.scala]: https://github.com/SingaporeScalaProgrammers/scala-workshop/blob/master/references/intro/src/main/scala/Loop4.scala
+[Loop5.scala]: https://github.com/SingaporeScalaProgrammers/scala-workshop/blob/master/references/intro/src/main/scala/Loop5.scala
+[Loop6.scala]: https://github.com/SingaporeScalaProgrammers/scala-workshop/blob/master/references/intro/src/main/scala/Loop6.scala
+[Loop7.scala]: https://github.com/SingaporeScalaProgrammers/scala-workshop/blob/master/references/intro/src/main/scala/Loop7.scala
+[Loop8.scala]: https://github.com/SingaporeScalaProgrammers/scala-workshop/blob/master/references/intro/src/main/scala/Loop8.scala
