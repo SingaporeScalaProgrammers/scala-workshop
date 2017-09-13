@@ -494,11 +494,9 @@ anymore, which is now the responsibility of `map`.
 Collection API
 --------------
 
-We have gone to some length to describe some basic collection operations such
-as `fold` and `map`. Because these operations are very commonly used, Scala
-provided them in the standard library as part of the collections API. So let's
-perform one final refactoring to swap our own implementation with ones from the
-standard library:
+"By a lucky coincidence", Scala standard library collection API already provides
+most of the functions that we've just discovered. It would be a shame not to
+use them:
 
 ```scala
 def isEven(x: Int): Boolean = x % 2 == 0
