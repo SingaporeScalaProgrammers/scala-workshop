@@ -1,4 +1,4 @@
-object Main extends App {
+object Loop2 extends App {
 
   var sum = 0
   for (x <- 1 to 10) {
@@ -7,4 +7,5 @@ object Main extends App {
   }
 
   println(s"Sum of even numbers from 1 to 10 is $sum")
+
 }

@@ -1,17 +1,21 @@
-Introduction to Functional Programming in Scala
+Introduction to Functional Programming (FP) in Scala
 ============
 
 In this tutorial we will start with a trivial program, written in imperative 
 style, and through a series of refactorings transform it into a functional 
-program while learning the core FP concepts like referential transparency, 
-expression-based programming, recursion, immutability and higher-order 
-functions.
+program while learning core FP concepts such as:
+
+- referential transparency,
+- expression-based programming,
+- recursion,
+- immutability, and
+- higher-order functions.
 
 Getting Started
--------
+---------------
 
-Open file `src/main/scala/Main.scala` in your editor of choice. To run the 
-program start `sbt` from the terminal and type `run` in SBT prompt.
+Open file `src/main/scala/Main.scala` in your editor of choice.
+To run the program start `sbt` from the terminal and type `run` in SBT prompt.
 
 The Challenge
 -------------
@@ -31,7 +35,7 @@ The "Real" Program
 ------------------
 
 We'll start with almost a schoolbook solution in Java that will have loops, 
-conditionals and variables. This first example is in Java instead of Scala 
+conditionals, and variables. This first example is in Java instead of Scala 
 so that it's immediately familiar to anyone who did some programming in 
 procedural imperative language before:
 
@@ -50,15 +54,18 @@ public class Loop {
 }
 ```
 
-This program is on purpose easy enough to understand. Consider however that 
-in your real programming work you would iterate over some complex domain 
-objects instead on numbers, maybe over two or three arrays of those 
-simultaneously, there would be many more conditions and they would be nested,
-there would be multiple variables to keep track of running totals and they 
-would all change independently of each other based on complex conditional 
-logic. And what about running this loop on multiple CPU cores in parallel so 
-that it can finish faster? You see how a simple `for` loop with a variable can 
-quickly get out of hand?
+> Source: [Loop1.java]
+
+This program is, on purpose, easy enough to understand. Consider however, that 
+in your real programming work you might deal with several complexities at the same
+time and thus a simple `for` loop with a variable can quickly get out of hand:
+
+- iterating over some complex domain objects instead on numbers,
+- iterating over two or three arrays of those domain objects simultaneously,
+- multiple and / or nested conditions,
+- multiple variables to keep track of running totals,
+- multiple variables that all change independently based on complex conditional logic, and
+- parallel loop execution (i.e. utilising multiple CPU cores).
 
 Two cornerstones of imperative programming languages contribute to the 
 problem here:
@@ -98,6 +105,8 @@ object Main extends App {    // 1.
 }
 ```
 
+> Source: [Loop2.scala]
+
 First you notice that Scala is less verbose: no semicolons needed, no `public
  static void main`, no explicit reassignment of `x` in `for` loop. Here are 
  other notable differences:
@@ -128,6 +137,27 @@ for (x <- 1 to 10) {    // iterate
 
 There are 4 distinct functions that are entangled in this statement-based 
 program. No single function can be tested in isolation. Let's pull them apart:
+
+```scala
+def iterate(max: Int): List[Int] = ???
+def filterEven(xs: List[Int]): List[Int] = ???
+def square(xs: List[Int]): List[Int] = ???
+def sum(xs: List[Int]): Int = ???
+
+val result = sum(square(filterEven(iterate(10))))
+```
+
+Let's review the function and variable assignment Scala syntax first:
+
+1. `def f(x: Int): List[Int]` defines function `f` that takes an 
+argument `x` of type `Int` and returns a `List` of `Int`s;
+2. `???` is a way to define a method stub (like a TODO),
+which will allow the program to compile but throws `NotImplementedError`
+when the function is called;
+3. `val x = ...` defines an immutable value, once assigned the value
+cannot be changed (unlike a `var`).
+
+So how would the function implementation look?
 
 ```scala
 def iterate(max: Int): List[Int] = {
@@ -170,15 +200,15 @@ def sum(xs: List[Int]): Int = {
 val result = sum(square(filterEven(iterate(10))))
 ```
 
-Wow! The number of lines of code just exploded and we introduced a lot of 
-duplication along the way. Let's review new Scala syntax first:
+> Source: [Loop3.scala]
 
-1. `def f(x: Int): List[Int] = {...}` defines function `f` that takes an 
-argument `x` of type `Int` and returns a `List` of `Int`s;
-2. The last expression of a function body is its return value;
-3. `List[Int]()` creates an empty list of integers;
-4. `list :+ element` returns a new list made of appending `element` to `list`;
-5. `val x = ...` defines an immutable value that cannot be changed.
+Wow! The number of lines of code just exploded and we introduced a lot of 
+duplication along the way. Let's review the function body implementation:
+
+1. The last expression of a function body is its return value;
+2. `List[Int]()` creates an empty list of integers, one alternative is to use
+the equivalent factory method `List.empty[Int]` (a matter of preference);
+3. `list :+ element` returns a new list made of appending `element` to `list`;
 
 Despite explosion of code and duplication we've made our program 
 composable: every function can be tested in isolation and functions can be 
@@ -190,15 +220,18 @@ universal building blocks.
 
 Consider the expression `sum(square(filterEven(iterate(10))))`. Unlike a 
 program made of statements, every sub-expression is an expression on its own:
- `10` is an expression which evaluates to 10, `iterate(10)` is an expression 
-which evaluates to `List(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)`, `filterEven 
-(iterate(10))` is an expression which evaluates to `List(2, 4, 6, 8, 10)` 
-and so on. Every expression can be replaced with the value it evaluates to as 
+
+- `10` is an expression which evaluates to 10,
+- `iterate(10)` is an expression which evaluates to `List(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)`,
+- `filterEven (iterate(10))` is an expression which evaluates to `List(2, 4, 6, 8, 10)`,
+- and so on.
+
+Every expression can be replaced with the value it evaluates to as 
 long as functions involved in the expression don't have side effects – e.g.
 launch the proverbial missiles or modify variables in other parts of the 
 program. In functional programming such functions are called *pure* and the 
 property allowing substitution of values for expressions is called 
-*referential transparency* meaning that referring to a value via an 
+*referential transparency*, meaning that referring to a value via an 
 indirection of a function call is transparent and doesn't change program 
 execution.
 
@@ -256,7 +289,7 @@ recursion though;
 3. We use *pattern matching* to match on integer `max`. It looks like `switch` 
 statement in other programming languages, but is an expression instead of a 
 statement because every `case` branch has to evaluate to the same type;
-4. `case _` matches any value;
+4. `case _` matches any value (i.e. catchall);
 5. `element :: list` creates a new list with `element` prepended to `list`;
 6. `Nil` is an empty list.
 
@@ -309,6 +342,9 @@ def sum(xs: List[Int]): Int = {
 }
 ```
 
+> Source: [Loop4.scala]<br>
+> Diff: [Loop3.scala => Loop4.scala]
+
 Here we pattern match on a list instead of integer. Note how we used the same
 list construction syntax in the `case` expression to capture list's head `x` 
 and its `tail`. `++` concatenates two lists.
@@ -354,6 +390,9 @@ def filterEven(xs: List[Int]): List[Int] =
 def square(xs: List[Int]): List[Int] =
   flatMap(xs, x => List(x * x))
 ```
+
+> Source: [Loop5.scala]<br>
+> Diff: [Loop4.scala => Loop5.scala]
 
 1. `flatMap` takes function `f` as its second argument;
 2. `A => B` is type annotation for a function that takes an argument of type 
@@ -404,6 +443,9 @@ def sum(xs: List[Int]): Int =
   foldLeft(xs)(0)((acc, x) => acc + x)
 ```
 
+> Source: [Loop6.scala]<br>
+> Diff: [Loop5.scala => Loop6.scala]
+
 1. `foldLeft[A, R]` is parametrized on type of the input list `A` as well as 
 the type of its return value `R` thus `foldLeft` is a *generic* function;
 2. Scala functions can have multiple parameter lists. Here it's useful for 
@@ -443,18 +485,21 @@ def isEven(x: Int): Boolean = x % 2 == 0
 def square(x: Int): Int = x * x
 
 def sumOfEvenSquares(max: Int): Int = {
-  sum(map(filter(iterate(10))(isEven))(square))
+  sum(map(filter(iterate(max))(isEven))(square))
 }
 ```
 
-Here `square` really does only what it says and doesn't mess with lists 
-anymore, that's responsibility of `map` now.
+> Source: [Loop7.scala]<br>
+> Diff: [Loop6.scala => Loop7.scala]
+
+Here, `square` really does only what it says and doesn't mess with lists 
+anymore, which is now the responsibility of `map`.
 
 Collection API
 --------------
 
-By a lucky coincidence Scala standard library collection API already provides
-most of the functions that we've just discovered. It would be a shame not to 
+"By a lucky coincidence", Scala standard library collection API already provides
+most of the functions that we've just discovered. It would be a shame not to
 use them:
 
 ```scala
@@ -463,12 +508,15 @@ def isEven(x: Int): Boolean = x % 2 == 0
 def square(x: Int): Int = x * x
 
 def sumOfEvenSquares(max: Int): Int = {
-  (1 to 10)
+  (1 to max)
     .filter(isEven)
     .map(square)
     .sum
 }
 ```
+
+> Source: [Loop8.scala]<br>
+> Diff: [Loop7.scala => Loop8.scala]
 
 We use `1 to 10` directly instead of our own `iterate` function. `filter`, 
 `map`, `sum` as well as `flatMap`, `foldLeft` and many more functions are 
@@ -484,3 +532,18 @@ readable and easy to maintain and change because it doesn't contain any
 mutable variables and imperative statements. It's very modular – we can 
 change the order of operations in predictable ways and we can add more 
 transformations without changing the existing ones.
+
+<!-- Links and notes -->
+[Loop1.java]: https://github.com/SingaporeScalaProgrammers/scala-workshop/blob/master/references/intro/src/main/java/Loop1.java
+[Loop2.scala]: https://github.com/SingaporeScalaProgrammers/scala-workshop/blob/master/references/intro/src/main/scala/Loop2.scala
+[Loop3.scala]: https://github.com/SingaporeScalaProgrammers/scala-workshop/blob/master/references/intro/src/main/scala/Loop3.scala
+[Loop3.scala => Loop4.scala]: https://rawgit.com/SingaporeScalaProgrammers/scala-workshop/master/references/intro/diff/Loop3-Loop4.html
+[Loop4.scala]: https://github.com/SingaporeScalaProgrammers/scala-workshop/blob/master/references/intro/src/main/scala/Loop4.scala
+[Loop4.scala => Loop5.scala]: https://rawgit.com/SingaporeScalaProgrammers/scala-workshop/master/references/intro/diff/Loop4-Loop5.html
+[Loop5.scala]: https://github.com/SingaporeScalaProgrammers/scala-workshop/blob/master/references/intro/src/main/scala/Loop5.scala
+[Loop5.scala => Loop6.scala]: https://rawgit.com/SingaporeScalaProgrammers/scala-workshop/master/references/intro/diff/Loop5-Loop6.html
+[Loop6.scala]: https://github.com/SingaporeScalaProgrammers/scala-workshop/blob/master/references/intro/src/main/scala/Loop6.scala
+[Loop6.scala => Loop7.scala]: https://rawgit.com/SingaporeScalaProgrammers/scala-workshop/master/references/intro/diff/Loop6-Loop7.html
+[Loop7.scala]: https://github.com/SingaporeScalaProgrammers/scala-workshop/blob/master/references/intro/src/main/scala/Loop7.scala
+[Loop7.scala => Loop8.scala]: https://rawgit.com/SingaporeScalaProgrammers/scala-workshop/master/references/intro/diff/Loop7-Loop8.html
+[Loop8.scala]: https://github.com/SingaporeScalaProgrammers/scala-workshop/blob/master/references/intro/src/main/scala/Loop8.scala
