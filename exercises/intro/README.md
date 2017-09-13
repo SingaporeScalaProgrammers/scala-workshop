@@ -54,11 +54,7 @@ public class Loop {
 }
 ```
 
-<center>
-  <small>
-    _(source: [Loop1.java](https://github.com/SingaporeScalaProgrammers/scala-workshop/blob/master/references/intro/src/main/java/Loop1.java))_
-  </small>
-</center>
+_<center><small>(source: [Loop1.java](https://github.com/SingaporeScalaProgrammers/scala-workshop/blob/master/references/intro/src/main/java/Loop1.java))</small></center>_
 <br>
 
 This program is, on purpose, easy enough to understand. Consider however, that 
@@ -110,11 +106,7 @@ object Main extends App {    // 1.
 }
 ```
 
-<center>
-  <small>
-    _(source: [Loop2.scala](https://github.com/SingaporeScalaProgrammers/scala-workshop/blob/master/references/intro/src/main/scala/Loop2.scala))_
-  </small>
-</center>
+_<center><small>(source: [Loop2.scala](https://github.com/SingaporeScalaProgrammers/scala-workshop/blob/master/references/intro/src/main/scala/Loop2.scala))</small></center>_
 <br>
 
 First you notice that Scala is less verbose: no semicolons needed, no `public
@@ -210,11 +202,7 @@ def sum(xs: List[Int]): Int = {
 val result = sum(square(filterEven(iterate(10))))
 ```
 
-<center>
-  <small>
-    _(source: [Loop3.scala](https://github.com/SingaporeScalaProgrammers/scala-workshop/blob/master/references/intro/src/main/scala/Loop3.scala))_
-  </small>
-</center>
+_<center><small>(source: [Loop3.scala](https://github.com/SingaporeScalaProgrammers/scala-workshop/blob/master/references/intro/src/main/scala/Loop3.scala))</small></center>_
 <br>
 
 Wow! The number of lines of code just exploded and we introduced a lot of 
@@ -357,11 +345,7 @@ def sum(xs: List[Int]): Int = {
 }
 ```
 
-<center>
-  <small>
-    _(source: [Loop4.scala](https://github.com/SingaporeScalaProgrammers/scala-workshop/blob/master/references/intro/src/main/scala/Loop4.scala))_
-  </small>
-</center>
+_<center><small>(source: [Loop4.scala](https://github.com/SingaporeScalaProgrammers/scala-workshop/blob/master/references/intro/src/main/scala/Loop4.scala))</small></center>_
 <br>
 
 Here we pattern match on a list instead of integer. Note how we used the same
@@ -410,11 +394,7 @@ def square(xs: List[Int]): List[Int] =
   flatMap(xs, x => List(x * x))
 ```
 
-<center>
-  <small>
-    _(source: [Loop5.scala](https://github.com/SingaporeScalaProgrammers/scala-workshop/blob/master/references/intro/src/main/scala/Loop5.scala))_
-  </small>
-</center>
+_<center><small>(source: [Loop5.scala](https://github.com/SingaporeScalaProgrammers/scala-workshop/blob/master/references/intro/src/main/scala/Loop5.scala))_</small></center>
 <br>
 
 1. `flatMap` takes function `f` as its second argument;
@@ -466,11 +446,7 @@ def sum(xs: List[Int]): Int =
   foldLeft(xs)(0)((acc, x) => acc + x)
 ```
 
-<center>
-  <small>
-    _(source: [Loop6.scala](https://github.com/SingaporeScalaProgrammers/scala-workshop/blob/master/references/intro/src/main/scala/Loop6.scala))_
-  </small>
-</center>
+_<center><small>(source: [Loop6.scala](https://github.com/SingaporeScalaProgrammers/scala-workshop/blob/master/references/intro/src/main/scala/Loop6.scala))</small></center>_
 <br>
 
 1. `foldLeft[A, R]` is parametrized on type of the input list `A` as well as 
@@ -516,11 +492,7 @@ def sumOfEvenSquares(max: Int): Int = {
 }
 ```
 
-<center>
-  <small>
-    _(source: [Loop7.scala](https://github.com/SingaporeScalaProgrammers/scala-workshop/blob/master/references/intro/src/main/scala/Loop7.scala))_
-  </small>
-</center>
+_<center><small>(source: [Loop7.scala](https://github.com/SingaporeScalaProgrammers/scala-workshop/blob/master/references/intro/src/main/scala/Loop7.scala))</small></center>_
 <br>
 
 Here, `square` really does only what it says and doesn't mess with lists 
@@ -548,11 +520,7 @@ def sumOfEvenSquares(max: Int): Int = {
 }
 ```
 
-<center>
-  <small>
-    _(source: [Loop8.scala](https://github.com/SingaporeScalaProgrammers/scala-workshop/blob/master/references/intro/src/main/scala/Loop8.scala))_
-  </small>
-</center>
+_<center><small>(source: [Loop8.scala](https://github.com/SingaporeScalaProgrammers/scala-workshop/blob/master/references/intro/src/main/scala/Loop8.scala))</small></center>_
 <br>
 
 We use `1 to 10` directly instead of our own `iterate` function. `filter`, 
