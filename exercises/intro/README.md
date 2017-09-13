@@ -123,13 +123,13 @@ First you notice that Scala is less verbose: no semicolons needed, no `public
 
 1. `object` keyword defines a singleton value initialized by the block of code 
 inside it. Extending `App` makes it an entrypoint of an application;
-1. `var` keyword defines a variable that can be reassigned later. Type of the
+2. `var` keyword defines a variable that can be reassigned later. Type of the
  variable is inferred from the right-hand side of the assignment, `Int` in 
  this case;
-1. `1 to 10` defines a inclusive `Range` – a sequence that can be enumerated;
-1. `for (x <- seq) { ...x... }` enumerates elements of `seq` executing the 
+3. `1 to 10` defines a inclusive `Range` – a sequence that can be enumerated;
+4. `for (x <- seq) { ...x... }` enumerates elements of `seq` executing the 
 code block in curly braces with `x` representing each element in scope;
-1. `s"...$x..."` does string interpolation of value `x`.
+5. `s"...$x..."` does string interpolation of value `x`.
 
 Decomplecting Functions
 -----------------------
@@ -161,10 +161,10 @@ Let's review the function and variable assignment Scala syntax first:
 
 1. `def f(x: Int): List[Int]` defines function `f` that takes an 
 argument `x` of type `Int` and returns a `List` of `Int`s;
-1. `???` is a way to define a method stub (like a TODO),
+2. `???` is a way to define a method stub (like a TODO),
 which will allow the program to compile but throws `NotImplementedError`
 when the function is called;
-1. `val x = ...` defines an immutable value, once assigned the value
+3. `val x = ...` defines an immutable value, once assigned the value
 cannot be changed (unlike a `var`).
 
 So how would the function implementation look?
@@ -221,9 +221,9 @@ Wow! The number of lines of code just exploded and we introduced a lot of
 duplication along the way. Let's review the function body implementation:
 
 1. The last expression of a function body is its return value;
-1. `List[Int]()` creates an empty list of integers, one alternative is to use
+2. `List[Int]()` creates an empty list of integers, one alternative is to use
 the equivalent factory method `List.empty[Int]` (a matter of preference);
-1. `list :+ element` returns a new list made of appending `element` to `list`;
+3. `list :+ element` returns a new list made of appending `element` to `list`;
 
 Despite explosion of code and duplication we've made our program 
 composable: every function can be tested in isolation and functions can be 
@@ -299,14 +299,14 @@ First, let's clear the new Scala syntax out of the way:
 
 1. Functions can be defined inside the body of other functions, this is not 
 recursion though;
-1. `@tailrec` annotation checks at compile time that our recursive function 
+2. `@tailrec` annotation checks at compile time that our recursive function 
 `loop` will not blow the call stack with large inputs;
-1. We use *pattern matching* to match on integer `max`. It looks like `switch` 
+3. We use *pattern matching* to match on integer `max`. It looks like `switch` 
 statement in other programming languages, but is an expression instead of a 
 statement because every `case` branch has to evaluate to the same type;
-1. `case _` matches any value (i.e. catchall);
-1. `element :: list` creates a new list with `element` prepended to `list`;
-1. `Nil` is an empty list.
+4. `case _` matches any value (i.e. catchall);
+5. `element :: list` creates a new list with `element` prepended to `list`;
+6. `Nil` is an empty list.
 
 Recursive pattern is to pass the intermediary result along with the reduced 
 input to the `loop` function itself. The recursive function breaks out of 
